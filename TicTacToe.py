@@ -58,7 +58,7 @@ def Start():
             break
     print(board,'\n\n')
     print(img,'\n\n-----------\n')
-    toss = random.randrange(2)
+    toss = 1 #random.randrange(2)
     if toss == 1:
         print("You go first\n")
         exit_code = 2
@@ -120,51 +120,59 @@ def Comp():
     global move1 , move2
     
     call = Check()
-    print(call,"call made")
     if call == 0 or call == None :
         if matrix[1][1] != ' ' :
             if (len(corner) != 4) and (centre == False) :
                 if str(move2)+str(move1) in corner:
                     if move1 != move2:
-                        print("1.1.1.1")
                         matrix[move2][move1] = com_pc
-                        del corner[corner.index(str(move2)+str(move1))]     #1.1.1.1    
+                        del corner[corner.index(str(move2)+str(move1))]     
                     elif move1==move2==0:
-                        print("1.1.1.2")
                         matrix[2][2] = com_pc
-                        del corner[corner.index('22')]                      #1.1.1.2
+                        del corner[corner.index('22')]                    
                     elif move1==move2==2:
-                        print("1.1.1.3")
                         matrix[0][0] = com_pc
-                        del corner[corner.index('00')]                      #1.1.1.3
+                        del corner[corner.index('00')]                     
                     else:
-                        print("1.1.1.4")
                         pick=random.choice(corner)
-                        matrix[int(pick[0])][int(pick[1])] = com_pc         #1.1.1.4
+                        matrix[int(pick[0])][int(pick[1])] = com_pc         
                         del corner[corner.index(pick)] 
                 elif str(move1)+str(move2) in edge:
                     if move1==1:
-                        print("1.1.2.1")
                         matrix[move1][abs(move2-2)] = com_pc
-                        del edge[edge.index(str(move1))+str(abs(move2-2))]  #1.1.2.1
-                    elif move2==1:
-                        print("1.1.2.2")    
+                        del edge[edge.index(str(move1))+str(abs(move2-2))]  
+                    elif move2==1:   
                         matrix[abs(move1-2)][move2] = com_pc
-                        del edge[edge.index(str(abs(move1-2))+str(move2))]  #1.1.2.2
+                        del edge[edge.index(str(abs(move1-2))+str(move2))] 
                 elif corner != []:
-                    print("1.1.3")
                     pick=random.choice(corner)
-                    matrix[int(pick[0])][int(pick[1])] = com_pc             #1.1.3
+                    matrix[int(pick[0])][int(pick[1])] = com_pc         
                     del corner[corner.index(pick)]
                 else:
-                    print("1.1.4")
                     pick=random.choice(edge)
-                    matrix[int(pick[0])][int(pick[1])] = com_pc             #1.1.4
+                    matrix[int(pick[0])][int(pick[1])] = com_pc             
                     del edge[edge.index(pick)]               
             elif (len(corner) != 4) and (centre == True) :
-                if len(corner) == 3:
-                    if move1 == move2:                                      #1.2.1.1
-                        print("1.2.1.1")
+                if len(corner) == 3 and len(edge) == 3:
+                    if  (move1 == move2) or (abs(move2 - move1) == 0) :
+                        if move1 != move2:
+                            matrix[move2][move1] = com_pc
+                            del corner[corner.index(str(move2)+str(move1))]       
+                        elif move1==move2:
+                            matrix[abs(move1-2)][abs(move2-2)] = com_pc
+                            del corner[corner.index(str(abs(move1-2))+str(abs(move2-2)))]                    
+                    elif abs(move2 - move1) == 1 :
+                        for i in corner:
+                            if i[0] == i[1]:
+                                if str(abs(int(i[0])-2))*2 not in corner:
+                                    matrix[int(i[0])][int(i[1])] = com_pc
+                                    del corner[corner.index(i)]
+                            if i[0] != i[1]:
+                                if (i[1] + i[0]) not in corner:
+                                    matrix[int(i[0])][int(i[1])] = com_pc
+                                    del corner[corner.index(i)]
+                elif len(corner) == 3:
+                    if move1 == move2:                                     
                         if '02' in corner:
                             matrix[0][2] = com_pc
                             del corner[corner.index('02')]                  
@@ -179,8 +187,7 @@ def Comp():
                             pick=random.choice(edge)
                             matrix[int(pick[0])][int(pick[1])] = com_pc
                             del edge[edge.index(pick)]    
-                    elif move1 != move2:
-                        print("1.2.1.2")                                    #1.2.1.2
+                    elif move1 != move2:                                    
                         if '00' in corner:
                             matrix[0][0] = com_pc
                             del corner[corner.index('00')]
@@ -198,8 +205,13 @@ def Comp():
                             pick=random.choice(edge)
                             matrix[int(pick[0])][int(pick[1])] = com_pc
                             del edge[edge.index(pick)]
+                elif len(corner) == 2 and len(edge) == 4:
+                        pick=random.choice(edge)
+                        matrix[int(pick[0])][int(pick[1])] = com_pc
+                        del edge[edge.index(pick)]
+
                 else:
-                    for i in edge:                                          #1.2.2
+                    for i in edge:                                     
                         print("1.2.2")
                         if i[0]=='1' and (matrix[1][abs(int(i[1])-2)] != play_pc) and (matrix[2][int(i[1])] != play_pc) and (matrix[0][int(i[1])] != play_pc):
                             matrix[1][int(i[1])] = com_pc
