@@ -30,7 +30,7 @@ def Menu():
     print("\n\nWelcome to Tic Tac Toe\n")
     choice1=int(input('1. Start Game\n2. Instructions\n3. Quit\nEnter a number: '))
     
-    if choice1 not in [1,2,3] or type(choice1) != int:
+    if choice1 not in [1,2,3]:
         choice1=int(input("\n**Enter a valid number: "))
     else:
         if choice1 == 1:
@@ -204,9 +204,6 @@ def Comp():
                         if '00' in corner:
                             matrix[0][0] = com_pc
                             del corner[corner.index('00')]
-                        elif '11' in corner:
-                            matrix[1][1] = com_pc
-                            del corner[corner.index('11')]
                         elif '22' in corner:
                             matrix[2][2] = com_pc
                             del corner[corner.index('22')]
