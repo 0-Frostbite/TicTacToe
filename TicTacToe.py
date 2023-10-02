@@ -1,4 +1,4 @@
-import random, time
+import random
 
 # ---------------------------------------------------------------------------
 
@@ -9,6 +9,7 @@ piece = ['X','O']
 # ---------------------------------------------------------------------------
 
 def Reset():
+    
     global centre , corner , edge
     global matrix
     global board , img
@@ -23,9 +24,12 @@ def Reset():
     img = '_7_|_8_|_9_\n_4_|_5_|_6_\n 1 | 2 | 3 '
 
 def Menu():
+    
     global exit_code
+    
     print("\n\nWelcome to Tic Tac Toe\n")
     choice1=int(input('1. Start Game\n2. Instructions\n3. Quit\nEnter a number: '))
+    
     if choice1 not in [1,2,3] or type(choice1) != int:
         choice1=int(input("\n**Enter a valid number: "))
     else:
@@ -47,18 +51,24 @@ def Menu():
             exit_code = 5
     
 def Start():
+    
     global play_pc , com_pc , piece
     global board
     global exit_code
+    
     play_pc = input("\n\nChoose your piece (X/O or any other): ").upper()
     print(f"\nPlayer chose {play_pc}\n")
+    
     for i in piece:
         if play_pc != i:
             com_pc = i
             break
+            
     print(board,'\n\n')
     print(img,'\n\n-----------\n')
-    toss = 1 #random.randrange(2)
+    
+    toss = random.randrange(2)
+    
     if toss == 1:
         print("You go first\n")
         exit_code = 2
@@ -67,15 +77,16 @@ def Start():
         exit_code = 3
 
 def Update():
+    
     global board
 
     board = f'\n\n_{matrix[0][0]}_|_{matrix[0][1]}_|_{matrix[0][2]}_\n_{matrix[1][0]}_|_{matrix[1][1]}_|_{matrix[1][2]}_\n {matrix[2][0]} | {matrix[2][1]} | {matrix[2][2]} '
-
-    time.sleep(random.randrange(2,11)/10)
+    
     print(board,'\n \n')
     print(img,'\n\n-----------\n')
 
 def Play():
+    
     global exit_code
     global move1 , move2
     global matrix
@@ -114,12 +125,14 @@ def Play():
     WinCheck('player')   
 
 def Comp():
+    
     global exit_code
     global corner , edge , centre , matrix
     global com_pc , play_pc
     global move1 , move2
     
     call = Check()
+    
     if call == 0 or call == None :
         if matrix[1][1] != ' ' :
             if (len(corner) != 4) and (centre == False) :
@@ -209,10 +222,8 @@ def Comp():
                         pick=random.choice(edge)
                         matrix[int(pick[0])][int(pick[1])] = com_pc
                         del edge[edge.index(pick)]
-
                 else:
                     for i in edge:                                     
-                        print("1.2.2")
                         if i[0]=='1' and (matrix[1][abs(int(i[1])-2)] != play_pc) and (matrix[2][int(i[1])] != play_pc) and (matrix[0][int(i[1])] != play_pc):
                             matrix[1][int(i[1])] = com_pc
                             del edge[edge.index(i)]
@@ -240,8 +251,8 @@ def Comp():
         if call in corner:
             del corner[corner.index(call)]
         elif call in edge:
-            del edge[edge.index(call)]   
-    print(corner,'\n',edge)
+            del edge[edge.index(call)]
+            
     exit_code = 2
     Update()
     WinCheck()
@@ -258,7 +269,6 @@ def WinCheck(name='comp'):
                 check = 2
         if (matrix[0][2]==matrix[1][1]==matrix[2][0] and (matrix[0][2]!=' ' and matrix[1][1]!=' ' and matrix[2][0]!=' ')) or (matrix[0][0]==matrix[1][1]==matrix[2][2] and (matrix[0][0]!=' ' and matrix[1][1]!=' ' and matrix[2][2]!=' ')):
             check = 2
-
         for j in i:
             if j == ' ' and check == 0:
                 check = 1
@@ -270,7 +280,9 @@ def WinCheck(name='comp'):
         Win(name,1)
 
 def Check():
+    
     global com_pc , play_pc
+    
     com_count,play_count = 0,0
     mark = []
     count = 0
@@ -326,13 +338,17 @@ def Check():
                 com_pc , play_pc = play_pc , com_pc  
             count+=2
             return(mark)
+            
         elif not ((com_count == 2 and play_count==0)):
             com_pc , play_pc = play_pc , com_pc
             count+=1        
 
 def Quit():
+    
     global exit_code
+    
     choice = int(input('\n\n1. Play again\n2. Quit\nEnter a number: '))
+    
     while choice not in [1,2]:
         choice = int(input("\n**Enter a valid number"))
     if choice == 1:
@@ -341,7 +357,9 @@ def Quit():
         exit_code = 5
 
 def Win(name,dgt):
+    
     global exit_code
+    
     if dgt == 0:
         print("\n\n-- It's a DRAW --")
     elif name == 'player':
@@ -351,7 +369,9 @@ def Win(name,dgt):
     exit_code = 4
     
 def Run():
+    
     global running
+
     if exit_code == 0:
         Menu()
     elif exit_code == 1:
