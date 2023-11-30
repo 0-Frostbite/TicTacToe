@@ -2,7 +2,7 @@
 Stupid Python TicTacToe
 
 # matrix 
-    a nested list of 3 in 3 [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']] - a grid to plot the pieces and process data
+    a nested list of 3 in 3 [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']] - a grid to plot the pieces and process datA
 # corner 
     stores coordinates of the corners of matrix as strings - ['00','02','20','22']
 # edge
